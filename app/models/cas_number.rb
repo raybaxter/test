@@ -15,10 +15,10 @@ class CasNumber
   
   def valid?
     # http://www.cas.org/expertise/cascontent/registry/checkdig.html
-    valid_format and valid_checksum
+    valid_format? and valid_check_sum?
   end
   
-  def valid_format
+  def valid_format?
     if @number_string.nil? or !@number_string.is_a?(String) or split_digits.size != 3 then
       return false
     end
@@ -31,15 +31,22 @@ class CasNumber
     return true
   end
   
-  def valid_checksum
+  def check_sum
     digits = @number_string.gsub(/-/,'').split(//).reverse
-    check_digit = digits[0].to_i
-    total = 0
-    for i in (1...digits.length) do
-      total += i*digits[i].to_i
-    end
-    
-    return total.modulo(10) == check_digit
+     total = 0
+     for i in (1...digits.length) do
+       total += i*digits[i].to_i
+     end
+     total    
+  end
+      
+  def check_digit
+    last = @number_string.size-1
+    @number_string.slice(last..last).to_i
+  end
+  
+  def valid_check_sum?
+    return check_sum.modulo(10) == check_digit
   end
   
   def split_digits
