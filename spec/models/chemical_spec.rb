@@ -8,7 +8,7 @@ describe Chemical do
   
   def valid_chemical_attributes 
     { :name => "Test Chemical", 
-      :cas_number => "67-68-5",
+      :cas_number => "1234567-89-5",
       :amount => 300,
       :unit => "mL",
       :vendor => @vendor
@@ -49,7 +49,14 @@ describe Chemical do
       chemical = Chemical.new(valid_chemical_attributes.except(:vendor))
       chemical.should_not be_valid
     end
-        
+    
+    it "should have a valid CAS #, or none at all" do
+      chemical = Chemical.new(valid_chemical_attributes.except(:cas_number))
+      chemical.should be_valid
+      
+      chemical.cas_number = "0-00-1"
+      chemical.should_not be_valid
+    end
     
   end
   

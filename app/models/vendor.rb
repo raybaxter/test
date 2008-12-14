@@ -3,7 +3,7 @@ class Vendor < ActiveRecord::Base
   
   validates_presence_of :name, :message => "can't be blank"
   validates_presence_of :valid_contact_information, :message => "must have phone number, email address, or website url"
-  validates_presence_of :valid_website_url, :message => "must be valid domain", 
+  validates_presence_of :valid_website_url, :message => "must be a valid domain", 
                         :unless => :website_url_empty
                         
   before_save :fix_phone_number
