@@ -25,8 +25,6 @@ class Vendor < ActiveRecord::Base
   end
   
   def valid_website_url
-    domain = website_url.gsub(/^https?:\/\//,'').gsub(/\/.*$/,'')
-    response = `dig +short #{domain}`
-    response.size > 0
+    WebsiteUrl.validate(website_url)
   end
 end

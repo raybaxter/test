@@ -8,20 +8,24 @@ describe Vendor do
       :website_url => "www.example.com"
     }.extend(HashExtension)  
   end
+  
+  before(:all) do
+    # WebsiteUrl requires live Internet connection
+    WebsiteUrl.stub!(:validate).with('www.example.com').and_return(true)
+  end
 
   describe "#create" do
     it "should create a vendor" do
-       lambda { Vendor.create!(valid_vendor_attributes) }.should_not raise_error
-     end
+      lambda { Vendor.create!(valid_vendor_attributes) }.should_not raise_error
+    end
 
-     it "should properly assign all attributes" do
-       vendor = Vendor.create!(valid_vendor_attributes)
-       valid_vendor_attributes.keys.each do |attr| 
-         vendor.send(attr).should == valid_vendor_attributes[attr]
-       end
-     end
-
-   end
+    it "should properly assign all attributes" do
+      vendor = Vendor.create!(valid_vendor_attributes)
+      valid_vendor_attributes.keys.each do |attr| 
+        vendor.send(attr).should == valid_vendor_attributes[attr]
+      end
+    end
+  end
 
   describe "validate name" do
     it "should require a name" do
@@ -52,29 +56,13 @@ describe Vendor do
       @vendor.phone_number.should == '1234567890'
     end
     
-    
     it "should be valid with an email address only" do
       @vendor.email_address = "joe@bigco.com"
       @vendor.should be_valid
     end
     
-    it "should be valid with only the url of a registered domain name" do
-      @vendor.website_url = "example.com"
-      @vendor.should be_valid
-    end
-    
-    it "should be valid with the url of a registered domain name beginning with 'http://" do
-      @vendor.website_url = "http://example.com"
-      @vendor.should be_valid
-    end
-
-    it "should be valid with the url of a registered domain name beginning with 'https://" do
-      @vendor.website_url = "https://example.com"
-      @vendor.should be_valid
-    end
-    
-    it "should be valid with a url containing a path" do
-      @vendor.website_url = "https://example.com/arbitrary/path?with=params&query=x"
+    it "should be valid with only a valid url" do
+      @vendor.website_url = "www.example.com"
       @vendor.should be_valid
     end
     
@@ -87,12 +75,12 @@ describe Vendor do
       @vendor.email_address = ""
       @vendor.should_not be_valid
     end
-    
-    it "should not be valid with the url for an non-existent domain" do
-      @vendor.website_url = "if_this_domain_is_created_this_test_will_fail.com"
+
+    it "should not be valid with only a blank website url" do
+      @vendor.website_url = ""
       @vendor.should_not be_valid
     end
-    
+        
   end  
   
   describe "associations" do
