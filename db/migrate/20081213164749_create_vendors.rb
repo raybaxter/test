@@ -2,7 +2,7 @@ class CreateVendors < ActiveRecord::Migration
   def self.up
     create_table :vendors do |t|
       t.string :name
-      t.integer :phone_number
+      t.string :phone_number
       t.string :email_address
       t.string :website_url
       t.timestamps
