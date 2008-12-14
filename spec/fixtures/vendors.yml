@@ -1,0 +1,17 @@
+complete:
+  name: Complete, Inc.
+  phone_number: 4155551212
+  email_address: info@example.com
+  website_url: www.example.com
+  
+phone_only:
+  name: Phonly, Corp.
+  phone_number: 5105551212
+  
+web_only:
+  name: WebSites R Us
+  website_url: acme.com
+
+email_only:
+  name: Write Us
+  email_address: us@write.com

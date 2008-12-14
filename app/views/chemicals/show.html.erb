@@ -1,0 +1,28 @@
+<p>
+  <b>Name:</b>
+  <%=h @chemical.name %>
+</p>
+
+<p>
+  <b>Cas number:</b>
+  <%=h @chemical.cas_number %>
+</p>
+
+<p>
+  <b>Amount:</b>
+  <%=h @chemical.amount %>
+</p>
+
+<p>
+  <b>Unit:</b>
+  <%=h @chemical.unit %>
+</p>
+
+<p>
+  <b>Vendor:</b>
+  <%=h @chemical.vendor_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_chemical_path(@chemical) %> |
+<%= link_to 'Back', chemicals_path %>
