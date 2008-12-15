@@ -8,6 +8,11 @@ In addition, the code uses the dig command to determine whether a url belongs to
 
 Tests will pass falsely and fail erratically without an Internet connnection.
 
+Open Issues 
+
+Code does not validate that a CAS # corresponds to an existing compound.
+
+Code does not validate amounts or units. The amounts are assumed to be Integers. 
 
 Problem Description
 
