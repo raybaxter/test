@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<%= render :partial => :header %>
   <% if flash[:warning] -%>
   <p class="flashwarning"><%= flash[:warning] -%></p>
   <% end -%>
@@ -17,7 +16,7 @@
   <p class="flashnotice"><%= flash[:notice] -%></p>
   <% end -%>
 
-<%= yield  %>
+<%= yield :layout %>
 
 </body>
 </html>
