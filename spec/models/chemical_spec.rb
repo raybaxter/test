@@ -60,4 +60,16 @@ describe Chemical do
     
   end
   
+  describe "associations" do
+    before(:each) do
+      @chemical = Chemical.create!(valid_chemical_attributes)
+    end
+    
+    it "should have access to the vendor#name" do
+      @chemical.vendor.should_not be_nil
+      @chemical.vendor.name.should_not be_nil
+    end
+    
+  end
+  
 end

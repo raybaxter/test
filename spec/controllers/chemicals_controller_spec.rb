@@ -9,45 +9,21 @@ describe ChemicalsController do
   describe "responding to GET index" do
 
     it "should expose all chemicals as @chemicals" do
-      Chemical.should_receive(:find).with(:all).and_return([mock_chemical])
+      Chemical.should_receive(:find).with(:all, {:include=>:vendor}).and_return([mock_chemical])
       get :index
       assigns[:chemicals].should == [mock_chemical]
     end
-
-    describe "with mime type of xml" do
-  
-      it "should render all chemicals as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        Chemical.should_receive(:find).with(:all).and_return(chemicals = mock("Array of Chemicals"))
-        chemicals.should_receive(:to_xml).and_return("generated XML")
-        get :index
-        response.body.should == "generated XML"
-      end
     
-    end
-
   end
 
   describe "responding to GET show" do
 
     it "should expose the requested chemical as @chemical" do
-      Chemical.should_receive(:find).with("37").and_return(mock_chemical)
+      Chemical.should_receive(:find).with("37", {:include=>:vendor}).and_return(mock_chemical)
       get :show, :id => "37"
       assigns[:chemical].should equal(mock_chemical)
     end
-    
-    describe "with mime type of xml" do
-
-      it "should render the requested chemical as xml" do
-        request.env["HTTP_ACCEPT"] = "application/xml"
-        Chemical.should_receive(:find).with("37").and_return(mock_chemical)
-        mock_chemical.should_receive(:to_xml).and_return("generated XML")
-        get :show, :id => "37"
-        response.body.should == "generated XML"
-      end
-
-    end
-    
+        
   end
 
   describe "responding to GET new" do
@@ -111,7 +87,7 @@ describe ChemicalsController do
     describe "with valid params" do
 
       it "should update the requested chemical" do
-        Chemical.should_receive(:find).with("37").and_return(mock_chemical)
+        Chemical.should_receive(:find).with("37", :include=>:vendor).and_return(mock_chemical)
         mock_chemical.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => "37", :chemical => {:these => 'params'}
       end
@@ -133,7 +109,7 @@ describe ChemicalsController do
     describe "with invalid params" do
 
       it "should update the requested chemical" do
-        Chemical.should_receive(:find).with("37").and_return(mock_chemical)
+        Chemical.should_receive(:find).with("37", :include=>:vendor).and_return(mock_chemical)
         mock_chemical.should_receive(:update_attributes).with({'these' => 'params'})
         put :update, :id => "37", :chemical => {:these => 'params'}
       end

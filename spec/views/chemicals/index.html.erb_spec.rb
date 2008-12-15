@@ -4,18 +4,21 @@ describe "/chemicals/index.html.erb" do
   include ChemicalsHelper
   
   before(:each) do
+    @vendor = Vendor.create!(:name => "VName", :email_address => "hi@mom.com")
     assigns[:chemicals] = [
       stub_model(Chemical,
         :name => "value for name",
         :cas_number => "value for cas_number",
         :amount => "1",
-        :unit => "value for unit"
+        :unit => "value for unit",
+        :vendor => @vendor
       ),
       stub_model(Chemical,
         :name => "value for name",
         :cas_number => "value for cas_number",
         :amount => "1",
-        :unit => "value for unit"
+        :unit => "value for unit",
+        :vendor => @vendor
       )
     ]
   end
