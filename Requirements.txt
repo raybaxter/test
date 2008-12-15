@@ -1,0 +1,7 @@
+Rails 2.2.2
+Ruby 1.8.6
+Sqlite -Version
+The command 'dig' must be in path.
+DiG version 9.4.2-P2 was used in testing, but any version that accepts the '+short' option might work 
+Tests will pass falsely and fail erratically without an Internet connnection.
+
