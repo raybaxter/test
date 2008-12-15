@@ -1,5 +1,4 @@
 class ChemicalsController < ApplicationController
-
   def index
     @chemicals = Chemical.find(:all, :include => :vendor)
     
@@ -56,11 +55,11 @@ class ChemicalsController < ApplicationController
   
   def destroy
     @chemical = Chemical.find(params[:id])
-    @chemical.destroy
+    @chemical.destroy    
   
     respond_to do |format|
-      format.html { redirect_to(chemicals_url) }
       format.xml  { head :ok }
+      format.html { redirect_to(chemicals_url) }
     end
   end
 end
