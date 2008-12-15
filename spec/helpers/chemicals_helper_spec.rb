@@ -9,4 +9,20 @@ describe ChemicalsHelper do
     end
   end
   
+  describe "#link_for_cas_number" do
+    it "should return the link corresponding to a CAS #" do
+      helper.link_for_cas_number("1234567-89-5").should == link_to( "1234567-89-5", CasNumber::REGISTRY_URL_BASE + "/1234567-89-5")
+    end
+    
+    it "should return blank for empty CAS #" do
+      helper.link_for_cas_number("").should == ""
+    end
+    
+    it "should return blank for nil CAS #" do
+      helper.link_for_cas_number(nil).should == ""
+    end
+    
+    
+  end
+  
 end

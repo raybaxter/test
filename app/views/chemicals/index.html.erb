@@ -10,15 +10,18 @@
   </tr>
 
 <% for chemical in @chemicals %>
-  <tr>
+  <tr id="<%= chemical.id %>">
     <td><%=h chemical.name %></td>
-    <td><%=h chemical.cas_number %></td>
+    <td><%= link_for_cas_number(chemical.cas_number) %></td>
     <td><%=h chemical.amount %></td>
     <td><%=h chemical.unit %></td>
     <td><%=h chemical.vendor.name %></td>
     <td><%= link_to 'Show', chemical %></td>
     <td><%= link_to 'Edit', edit_chemical_path(chemical) %></td>
     <td><%= link_to 'Destroy', chemical, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td id="<%= chemical.id %>">
+    <%= link_to_remote 'Ajax Delete', :update => "chemicals", :url => {:action => "destroy", :id => chemical.id }  %>
+    </td>
   </tr>
 <% end %>
 </table>

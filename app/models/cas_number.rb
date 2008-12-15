@@ -15,6 +15,7 @@ class CasNumber
   
   def valid?
     # http://www.cas.org/expertise/cascontent/registry/checkdig.html
+    # TODO: existence?
     valid_format? and valid_check_sum?
   end
   

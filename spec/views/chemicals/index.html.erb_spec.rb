@@ -7,15 +7,17 @@ describe "/chemicals/index.html.erb" do
     @vendor = Vendor.create!(:name => "VName", :email_address => "hi@mom.com")
     assigns[:chemicals] = [
       stub_model(Chemical,
+        :id => "1"*9,
         :name => "value for name",
-        :cas_number => "value for cas_number",
+        :cas_number => "1234567-89-5",
         :amount => "1",
         :unit => "value for unit",
         :vendor => @vendor
       ),
       stub_model(Chemical,
+        :id => "2"*9,
         :name => "value for name",
-        :cas_number => "value for cas_number",
+        :cas_number => "67-68-5",
         :amount => "1",
         :unit => "value for unit",
         :vendor => @vendor
@@ -26,9 +28,28 @@ describe "/chemicals/index.html.erb" do
   it "should render list of chemicals" do
     render "/chemicals/index.html.erb"
     response.should have_tag("tr>td", "value for name", 2)
-    response.should have_tag("tr>td", "value for cas_number", 2)
+    response.should have_tag("tr>td>a", "1234567-89-5")
     response.should have_tag("tr>td", "1", 2)
     response.should have_tag("tr>td", "value for unit", 2)
   end
+  
+  it "should have a unique table row id for each chemical" do
+    render "/chemicals/index.html.erb"
+    response.should have_tag('tr#111111111')
+    response.should have_tag('tr#222222222')
+  end
+  
+  it "should have an ajax delete for each chemical" do
+    render "/chemicals/index.html.erb"
+    response.should have_tag('tr#111111111>td#111111111', 'Ajax Delete')
+    response.should have_tag('tr#222222222>td#222222222', 'Ajax Delete')
+  end
+  
+  it "should include prototype.js" do
+    render "/chemicals/index.html.erb", :layout => "application"
+    response.should include_text('prototype.js')
+  end
+  
+  
 end
 
