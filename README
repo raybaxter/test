@@ -1,3 +1,16 @@
+Problem Description Below
+
+Requirements 
+
+This code was developed on Mac OS X using, Ruby 1.8.6, Rails 2.2.2, and Sqlite 3.4.0. I have not knowingly used any other gem dependencies for the required portions of this problem, although there is ActiveSupport used for the Vendor controllers and view. 
+
+In addition, the code uses the dig command to determine whether a url belongs to a valid domain. This command is assume to be in the path. DiG version 9.4.2-P2 was used in testing, but any version that accepts the '+short' option ought to work.
+
+Tests will pass falsely and fail erratically without an Internet connnection.
+
+
+Problem Description
+
 For this code problem you will build a few features for a simple Web-based chemical inventory system. Please use any OO language you are comfortable with, your favorite web framework, and some kind of Object Relational Mapper. Please include plenty of tests/specs for the domain and your controllers.
 
 Part I

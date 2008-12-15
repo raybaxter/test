@@ -35,16 +35,10 @@ describe "/chemicals/index.html.erb" do
   
   it "should have a unique table row id for each chemical" do
     render "/chemicals/index.html.erb"
-    response.should have_tag('tr#111111111')
-    response.should have_tag('tr#222222222')
+    response.should have_tag('tr#row-id-111111111')
+    response.should have_tag('tr#row-id-222222222')
   end
-  
-  it "should have an ajax delete for each chemical" do
-    render "/chemicals/index.html.erb"
-    response.should have_tag('tr#111111111>td#111111111', 'Ajax Delete')
-    response.should have_tag('tr#222222222>td#222222222', 'Ajax Delete')
-  end
-  
+   
   it "should include prototype.js" do
     render "/chemicals/index.html.erb", :layout => "application"
     response.should include_text('prototype.js')

@@ -138,12 +138,6 @@ describe ChemicalsController do
       delete :destroy, :id => "37"
     end
   
-    it "should redirect to the chemicals list" do
-      Chemical.stub!(:find).and_return(mock_chemical(:destroy => true))
-      delete :destroy, :id => "1"
-      response.should redirect_to(chemicals_url)
-    end
-
   end
 
 end
