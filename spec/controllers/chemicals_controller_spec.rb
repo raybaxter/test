@@ -7,15 +7,15 @@ describe ChemicalsController do
 
   describe "active scaffold" do
      it "should show name, cas_number, vendor, amount and unit columns for list" do
-       config.list.columns.map(&:name).should == [:name, :cas_number, :vendor, :amount, :unit]
+       config.list.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit, :current_amount]
      end
      
      it "should show name, cas_number, vendor, amount and unit colums for create" do
-       config.create.columns.map(&:name).should == [:name, :cas_number, :vendor, :amount, :unit]
+       config.create.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit]
      end
 
      it "should show name, cas_number, vendor, amount and unit colums for update" do
-       config.update.columns.map(&:name).should == [:name, :cas_number, :vendor, :amount, :unit]
+       config.update.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit]
      end
    end
    
