@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081215232518) do
+ActiveRecord::Schema.define(:version => 20081216084531) do
 
   create_table "chemical_uses", :force => true do |t|
     t.string   "type"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20081215232518) do
   create_table "chemicals", :force => true do |t|
     t.string   "name"
     t.string   "cas_number"
-    t.integer  "amount"
+    t.integer  "original_amount"
     t.string   "unit"
     t.integer  "vendor_id"
     t.datetime "created_at"

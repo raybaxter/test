@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe ScheduledUse do
   before(:all) do
     @vendor = Vendor.create!(:name => "Vendor Name", :email_address => "e@a.com")
-    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :amount => 300, :unit => "L")
+    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :original_amount => 300, :unit => "L")
   end
 
   def valid_attributes
@@ -78,10 +78,4 @@ describe ScheduledUse do
 
   end
   
-  describe "usage" do
-    it "should description" do
-      pending("# - When a user adds a scheduled use, the amount displayed for a given chemical should reflect the amount after any scheduled uses that have already occurred have been deducted (for now we won't worry about scheduled uses that don't actually happen)
-      ")
-    end
-  end
 end

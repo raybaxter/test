@@ -49,5 +49,5 @@ end
 module HashExtension  
   def except(*keys)  
     self.reject { |k,v| keys.include? k.to_sym }  
-  end  
+  end
 end

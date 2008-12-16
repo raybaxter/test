@@ -7,14 +7,19 @@ describe ChemicalUsesController do
       config.list.columns.map(&:name).should == [:chemical, :chemist, :type, :amount]
     end
     
+    it "should not have create or update forms" do
+      config = controller.active_scaffold_config
+      config.actions.should == [:list, :nested]
+    end
+    
     it "should have correct columns for create" do
       config = controller.active_scaffold_config
-      config.update.columns = [:chemical_id, :chemist, :use_date, :amount]
+      config.update.columns.should == [:chemical_id, :chemist, :use_date, :amount]
     end
     
     it "should have correct columns for update" do
       config = controller.active_scaffold_config
-      config.create.columns = [:chemical_id, :chemist, :use_date, :amount]
+      config.create.columns.should == [:chemical_id, :chemist, :use_date, :amount]
     end
     
   end

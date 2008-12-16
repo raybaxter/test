@@ -3,12 +3,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe ChemicalUse do
   before(:all) do
     @vendor = Vendor.create!(:name => "Vendor Name", :email_address => "e@a.com")
-    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :amount => 300, :unit => "L")
+    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :original_amount => 300, :unit => "L")
   end
 
   def valid_attributes
-    {
-      :chemist => "name",
+    {:chemist => "name",
       :amount => "1",
       :chemical_id => @chemical.id,
       :use_date => Date.today,

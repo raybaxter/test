@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe OneTimeUse do
   before(:all) do
     @vendor = Vendor.create!(:name => "Vendor Name", :email_address => "e@a.com")
-    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :amount => 300, :unit => "L")
+    @chemical = Chemical.create!(:name => "Chemical Name", :vendor => @vendor, :original_amount => 300, :unit => "L")
   end
 
   def valid_attributes
@@ -54,19 +54,6 @@ describe OneTimeUse do
       use.should_not be_valid
     end
 
-  end
-
-  describe "usage" do
-    it "should deduct the used amount from the amount of the chemical in the inventory" do
-      # @chemical.amount = 300
-      # @chemical.save
-      @chemical.amount.should == 300
-      use = OneTimeUse.new(valid_attributes.except(:amount))
-      use.amount = 100
-      use.save!
-      use.chemical.amount.should == 200
-      @chemical.reload.amount.should == 200
-    end
   end
 
 end
