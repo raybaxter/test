@@ -1,9 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :scheduled_uses
-  map.resources :one_time_uses
-  map.resources :chemical_uses
-  map.resources :chemicals
-  map.resources :vendors
+  map.resources :scheduled_uses, :active_scaffold => true
+  map.resources :one_time_uses, :active_scaffold => true
+  map.resources :chemical_uses, :active_scaffold => true
+  map.resources :chemicals, :active_scaffold => true
+  map.resources :vendors, :active_scaffold => true
   
   map.connect '/', :controller => 'chemical_uses', :action => 'index'
 

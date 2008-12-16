@@ -2,6 +2,11 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe ScheduledUsesController do
   describe "route generation" do
+    
+    it "should map #update_table" do
+      route_for(:controller => "scheduled_uses", :action => "update_table").should == "/scheduled_uses/update_table"
+    end
+    
     it "should map #index" do
       route_for(:controller => "scheduled_uses", :action => "index").should == "/scheduled_uses"
     end
@@ -54,6 +59,10 @@ describe ScheduledUsesController do
   
     it "should generate params for #destroy" do
       params_from(:delete, "/scheduled_uses/1").should == {:controller => "scheduled_uses", :action => "destroy", :id => "1"}
+    end
+
+    it "should generate params for #update_table" do
+      params_from(:get, "/scheduled_uses/update_table").should == {:controller => "scheduled_uses", :action => "update_table"}
     end
   end
 end

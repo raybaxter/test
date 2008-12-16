@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe VendorsController do
   describe "route generation" do
+    it "should map #update_table" do
+      route_for(:controller => "vendors", :action => "update_table").should == "/vendors/update_table"
+    end
+    
     it "should map #index" do
       route_for(:controller => "vendors", :action => "index").should == "/vendors"
     end
@@ -28,6 +32,10 @@ describe VendorsController do
   end
 
   describe "route recognition" do
+    it "should generate params for #update_table" do
+      params_from(:get, "/vendors/update_table").should == {:controller => "vendors", :action => "update_table"}
+    end
+
     it "should generate params for #index" do
       params_from(:get, "/vendors").should == {:controller => "vendors", :action => "index"}
     end
@@ -54,6 +62,10 @@ describe VendorsController do
   
     it "should generate params for #destroy" do
       params_from(:delete, "/vendors/1").should == {:controller => "vendors", :action => "destroy", :id => "1"}
+    end
+
+    it "should generate params for #update_table" do
+      params_from(:get, "/vendors/update_table").should == {:controller => "vendors", :action => "update_table"}
     end
   end
 end

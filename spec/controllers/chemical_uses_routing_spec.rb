@@ -60,5 +60,9 @@ describe ChemicalUsesController do
     it "should generate params for #destroy" do
       params_from(:delete, "/chemical_uses/1").should == {:controller => "chemical_uses", :action => "destroy", :id => "1"}
     end
+
+    it "should generate params for #update_table" do
+      params_from(:get, "/chemical_uses/update_table").should == {:controller => "chemical_uses", :action => "update_table"}
+    end
   end
 end

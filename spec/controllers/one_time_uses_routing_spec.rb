@@ -55,5 +55,9 @@ describe OneTimeUsesController do
     it "should generate params for #destroy" do
       params_from(:delete, "/one_time_uses/1").should == {:controller => "one_time_uses", :action => "destroy", :id => "1"}
     end
+
+    it "should generate params for #update_table" do
+      params_from(:get, "/one_time_uses/update_table").should == {:controller => "one_time_uses", :action => "update_table"}
+    end
   end
 end
