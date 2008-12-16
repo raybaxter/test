@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  type: MyString
+  chemist: MyString
+  amount: 1
+  chemical_id: 1
+  use_date: 2008-12-15
+  start_date: 2008-12-15
+  end_date: 2008-12-15
+  periodicity_type: MyString
+  periodicity_value: 1
+
+two:
+  type: MyString
+  chemist: MyString
+  amount: 1
+  chemical_id: 1
+  use_date: 2008-12-15
+  start_date: 2008-12-15
+  end_date: 2008-12-15
+  periodicity_type: MyString
+  periodicity_value: 1
