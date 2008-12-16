@@ -1,15 +1,13 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
 one:
-  name: MyString
-  cas_number: MyString
-  amount: 
-  unit: MyString
-  vendor_id: 
+  name: Cyclohexane
+  cas_number: 1234567-89-5
+  original_amount: 2000
+  unit: mL
+  vendor_id:
 
 two:
-  name: MyString
-  cas_number: MyString
-  amount: 
-  unit: MyString
-  vendor_id: 
+  name: DMSO
+  cas_number: 67-68-5
+  original_amount: 1000
+  unit: mL
+  vendor_id:

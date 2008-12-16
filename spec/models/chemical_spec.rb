@@ -22,7 +22,7 @@ describe Chemical do
        :use_date => Date.today,
        :start_date => Date.today,
        :end_date => Date.today,
-       :periodicity_type => "value for periodicity_type",
+       :periodicity_type => "Weekly",
        :periodicity_value => "1"
      }.extend(HashExtension)
   end
@@ -90,11 +90,21 @@ describe Chemical do
     
     it "should have associations to one_time_uses" do
       @chemical.one_time_uses.size.should == 0
-      use = OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      use1 = OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      use2 = OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
       chemical = Chemical.find(@chemical)
-      chemical.one_time_uses.size.should == 1
-      chemical.one_time_uses.first.should == use
+      chemical.one_time_uses.size.should == 2
+      chemical.one_time_uses.should == [use1,use2]
     end
+    
+    it "should have associations to scheduled_uses" do
+       @chemical.scheduled_uses.size.should == 0
+       use1 = ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+       use2 = ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+       chemical = Chemical.find(@chemical)
+       chemical.scheduled_uses.size.should == 2
+       chemical.scheduled_uses.should == [use1,use2]
+     end
     
   end
   
@@ -108,15 +118,41 @@ describe Chemical do
       @chemical.current_amount.should == 300
     end
     
-    it "should be the original amount reduced by one-time uses" do
-      use = OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+    it "should be the original amount reduced by one-time use" do
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      @chemical.original_amount.should == 300
+      @chemical.current_amount.should == 200
+    end
+    
+    it "should be the original amount reduced by multiple one-time uses" do
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      @chemical.original_amount.should == 300
+      @chemical.current_amount.should == 100
+    end
+   
+    it "should be the original amount reduced by past recurrent use" do
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
       @chemical.original_amount.should == 300
       @chemical.current_amount.should == 200
     end
     
     it "should be the original amount reduced by past recurrent uses" do
-      pending("Needs to be written")
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 10, :start_date => Date.today - 70))
+      @chemical.original_amount.should == 300
+      @chemical.current_amount.should == 90
     end
+    
+    it "should be the original amount reduced by multiple one-time uses and multiple past recrrent uses" do
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 10))
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 10))
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 10, :start_date => Date.today - 70))
+      @chemical.original_amount.should == 300
+      @chemical.current_amount.should == 70
+    end
+    
     
   end
   

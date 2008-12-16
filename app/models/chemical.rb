@@ -10,10 +10,30 @@ class Chemical < ActiveRecord::Base
 
   belongs_to  :vendor
   has_many :one_time_uses
+  has_many :scheduled_uses
 
   def current_amount
-    one_time_amount_total = one_time_uses.inject(0) { |sum, u| sum + u.amount }
-    original_amount - one_time_amount_total
+    original_amount - one_time_amount_total - past_scheduled_uses_total
+  end
+  
+  def one_time_amount_total
+    one_time_uses.inject(0) { |sum, u| sum + u.amount }
+  end
+    # 
+    # def initialize(start_date, type, interval=1)
+    #    @start_date = start_date
+    #    @type = type
+    #    @interval = interval
+    #  end
+    # 
+    #  def elapsed_periods
+    #    
+  def past_scheduled_uses_total
+    total = 0
+    scheduled_uses.each do |u|
+      total += u.amount * Periodicity.new(u.start_date,u.periodicity_type,u.periodicity_value).elapsed_periods
+    end
+    total
   end
   
   def cas_number_empty

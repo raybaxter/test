@@ -5,16 +5,16 @@ describe Periodicity do
     Periodicity::TYPES.should == ['Weekly', 'Monthly', 'Business Day']
   end
   
-  it "should be initialized with a start_date a type" do
+  it "should be initialized with a start_date, a type and an optional interval" do
     Periodicity.new(Date.today,'Weekly').should_not be_nil
+    Periodicity.new(Date.today,'Business Day', 3).should_not be_nil
   end
 
-  
   describe "#elapsed_periods"
 
     describe "Daily" do
       
-      describe "if today is a Wednesday day" do
+      describe "if today is a Wednesday" do
         before(:each) do
           Date.stub!(:today).and_return(Date.new(2008,12,17)) 
         end
@@ -36,7 +36,7 @@ describe Periodicity do
         end
       end
       
-      describe "if today is a Monday and" do
+      describe "if today is a Monday" do
         before(:each) do
           Date.stub!(:today).and_return(Date.new(2008,12,15))
         end
@@ -60,6 +60,54 @@ describe Periodicity do
       
     end
       
+    describe "Every N business days" do
+      
+      describe "with an interval of 3 if today is a Wednesday" do
+        
+        before(:each) do
+           Date.stub!(:today).and_return(Date.new(2008,12,17)) 
+         end
+      
+        it "should return 1 for a start date of today" do
+           Periodicity.new(Date.today,'Business Day',3).elapsed_periods.should == 1
+         end
+      
+        it "should return 1 for a start date of yesterday" do
+          Periodicity.new(Date.today-1,'Business Day',3).elapsed_periods.should == 1
+        end
+      
+        it "should return 1 for last Saturday" do
+          Periodicity.new(Date.today-4,'Business Day',3).elapsed_periods.should == 1
+        end
+        
+        it "should return 2 for last Friday" do
+          Periodicity.new(Date.today-5,'Business Day',3).elapsed_periods.should == 2
+        end
+      end
+      
+      describe "if today is a Monday" do
+        before(:each) do
+          Date.stub!(:today).and_return(Date.new(2008,12,15))
+        end
+      
+        it "should return 1 for a start date of today" do
+          Periodicity.new(Date.today,'Business Day',3).elapsed_periods.should == 1
+        end
+      
+        it "should return 1 for a start date of the previous Thursday" do
+          Periodicity.new(Date.today-4,'Business Day',3).elapsed_periods.should == 1
+        end
+      
+        it "should return 2 for a start date of the previous Wednesay" do
+          Periodicity.new(Date.today-5,'Business Day',3).elapsed_periods.should == 2
+        end
+      
+        it "should return 2 for a start date of the previous Monday" do
+          Periodicity.new(Date.today-7,'Business Day',3).elapsed_periods.should == 2
+        end
+      end
+    end
+       
     describe "Weekly" do
       describe "if today is a Wednesday" do
         

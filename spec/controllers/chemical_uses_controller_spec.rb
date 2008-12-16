@@ -9,19 +9,10 @@ describe ChemicalUsesController do
     
     it "should not have create or update forms" do
       config = controller.active_scaffold_config
-      config.actions.should == [:list, :nested]
+      config.actions.should_not include(:create )
+      config.actions.should_not include(:update )
     end
-    
-    it "should have correct columns for create" do
-      config = controller.active_scaffold_config
-      config.update.columns.should == [:chemical_id, :chemist, :use_date, :amount]
-    end
-    
-    it "should have correct columns for update" do
-      config = controller.active_scaffold_config
-      config.create.columns.should == [:chemical_id, :chemist, :use_date, :amount]
-    end
-    
+        
   end
   
 end

@@ -1,10 +1,14 @@
 class Periodicity
   require 'date'
+  WEEKLY = :weekly
+  MONTHLY = :monthly
+  DAILY = :business_day
   TYPES = ['Weekly', 'Monthly', 'Business Day']
   
-  def initialize(start_date, type)
+  def initialize(start_date, type, interval=1)
     @start_date = start_date
     @type = type
+    @interval = interval
   end
   
   def elapsed_periods
@@ -18,7 +22,13 @@ class Periodicity
   
   def elapsed_days
     sum = 0
-    Date.today.downto(@start_date) { |d| sum += (d.cwday < 6 ? 1 : 0)}
+    counter = 0
+    Date.today.downto(@start_date)  do |d| 
+      if d.cwday < 6
+        sum += counter.modulo(@interval) == 0 ? 1 : 0
+        counter += 1
+      end
+    end
     sum
   end
 
