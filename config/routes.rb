@@ -1,12 +1,11 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :scheduled_uses
-
   map.resources :one_time_uses
-
   map.resources :chemical_uses
-
   map.resources :chemicals
   map.resources :vendors
+  
+  map.connect '/', :controller => 'chemical_uses', :action => 'index'
 
   # The priority is based upon order of creation: first created -> highest priority.
 
