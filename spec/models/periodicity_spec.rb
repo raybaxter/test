@@ -272,5 +272,10 @@ describe Periodicity do
     end
 
   end
-  
+
+  describe "#elapsed_periods consider end_dates" do
+    it "should description" do
+      pending("Need to consider end_dates of scheduled_uses")
+    end
+  end
 end

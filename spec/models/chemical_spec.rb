@@ -151,9 +151,17 @@ describe Chemical do
       ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 10, :start_date => Date.today - 70))
       @chemical.original_amount.should == 300
       @chemical.current_amount.should == 70
-    end
-    
+    end    
     
   end
   
+  describe "#last_usable_date" do
+    # * Forecast when chemical will run out: Display a warning on the list of chemicals, with the date the chemical will run out
+    #   - If the last use brings the amount to zero, then display the date of the last use
+    #   - If the last use makes the amount negative, display the date of the use previous to the last use
+      
+    it "should description" do
+      pending("figure me out")
+    end
+  end
 end
