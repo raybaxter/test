@@ -9,7 +9,21 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20081214022058) do
+ActiveRecord::Schema.define(:version => 20081215232518) do
+
+  create_table "chemical_uses", :force => true do |t|
+    t.string   "type"
+    t.string   "chemist"
+    t.integer  "amount"
+    t.integer  "chemical_id"
+    t.date     "use_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "periodicity_type"
+    t.integer  "periodicity_value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "chemicals", :force => true do |t|
     t.string   "name"

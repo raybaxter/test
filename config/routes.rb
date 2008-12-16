@@ -1,4 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :scheduled_uses
+
+  map.resources :one_time_uses
+
+  map.resources :chemical_uses
+
   map.resources :chemicals
   map.resources :vendors
 
