@@ -40,6 +40,12 @@ describe Chemical do
       chemical.should_not be_valid
     end
     
+    it "should require an integer amount" do
+      chemical = Chemical.new(valid_chemical_attributes)
+      chemical.amount = "10gms"
+      chemical.should_not be_valid
+    end
+    
     it "should require a unit" do
       chemical = Chemical.new(valid_chemical_attributes.except(:unit))
       chemical.should_not be_valid
