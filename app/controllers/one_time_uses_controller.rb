@@ -1,6 +1,6 @@
 class OneTimeUsesController < ApplicationController
   helper :chemical_uses
-  active_scaffold :chemical_use do |config|
+  active_scaffold :one_time_use do |config|
     config.label = "One-Time Chemical Usage"
     config.columns = [:chemical, :chemist, :use_date, :amount]
     
@@ -11,3 +11,5 @@ class OneTimeUsesController < ApplicationController
   end
 
 end
+         
+         
