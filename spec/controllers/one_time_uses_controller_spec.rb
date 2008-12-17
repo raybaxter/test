@@ -9,14 +9,11 @@ describe OneTimeUsesController do
       config.model.should == OneTimeUse # Another way
     end
     
-    # assert_not_nil CampusController.active_scaffold_config   
-    # assert CampusController.active_scaffold_config.model == Campus  
-    
-    
     it "should use active scaffold with correctly configured columns for list" do
       controller.active_scaffold_config.should_not be_nil 
       config = controller.active_scaffold_config
       config.list.columns.map(&:name).should == [:chemical, :chemist, :use_date, :amount]
     end
+    
   end
 end
