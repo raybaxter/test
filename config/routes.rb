@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :chemicals, :active_scaffold => true
   map.resources :vendors, :active_scaffold => true
   
-  map.connect '/', :controller => 'chemical_uses', :action => 'index'
+  map.connect '/', :controller => 'chemicals', :action => 'index'
 
   # The priority is based upon order of creation: first created -> highest priority.
 

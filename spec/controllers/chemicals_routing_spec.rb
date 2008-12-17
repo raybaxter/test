@@ -28,6 +28,12 @@ describe ChemicalsController do
   end
 
   describe "route recognition" do
+    
+    it "should generate params for /" do
+      params_from(:get, "/").should == {:controller => "chemicals", :action => "index"}
+    end
+    
+    
     it "should generate params for #index" do
       params_from(:get, "/chemicals").should == {:controller => "chemicals", :action => "index"}
     end

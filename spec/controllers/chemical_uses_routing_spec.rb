@@ -9,10 +9,6 @@ describe ChemicalUsesController do
   end
 
   describe "route recognition" do
-    it "should generate params for /" do
-      params_from(:get, "/").should == {:controller => "chemical_uses", :action => "index"}
-    end
-    
     it "should generate params for #index" do
       params_from(:get, "/chemical_uses").should == {:controller => "chemical_uses", :action => "index"}
     end

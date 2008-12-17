@@ -26,7 +26,7 @@ describe ChemicalsController do
    end
    
    describe "updating a chemical" do
-     xit "should display a drop down of existing vendors" do
+     it "should display a drop down of existing vendors" do
        config.columns[:vendor].form_ui.should == :select
      end
    end

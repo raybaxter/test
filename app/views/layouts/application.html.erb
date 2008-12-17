@@ -8,24 +8,23 @@
    <%= active_scaffold_includes %>
    <%= stylesheet_link_tag 'active_scaffold_overrides' %>
   </head>
-  
+
   <body class="public" id="index">
     <div id="header">
       <div id="logo">
         <a href="http://www.collaborativedrug.com/"><img alt="CDD - Collaborative Drug Discovery" src="/images/logo_public.gif?1229050515" /></a>
       </div>
-      
+
       <div id="publicNav">
         <ul>
           <li><%= link_to "Chemical Inventory Manager", "/" %></li>
           <li><%= link_to "Vendors", vendors_path %></li>
           <li><%= link_to "Chemicals", chemicals_path %></li>
-          <li><%= link_to "Inventory", chemical_uses_path %></li>
           <li><%= link_to "One-time Usage", one_time_uses_path %></li>
           <li><%= link_to "Scheduled Usage", scheduled_uses_path %></li>
         </ul>
       </div>
-    </div>  
+    </div>
     <div id="wrapper">
       <div id="content">
         <div id="page_header">
@@ -35,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div id="footer"></div>    
+    <div id="footer"></div>
   </body>
 </html>
 
