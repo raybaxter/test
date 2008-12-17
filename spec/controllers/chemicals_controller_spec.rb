@@ -7,7 +7,7 @@ describe ChemicalsController do
 
   describe "active scaffold" do
      it "should show name, cas_number, vendor, amount and unit columns for list" do
-       config.list.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit, :current_amount]
+       config.list.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit, :current_amount, :last_full_use_date]
      end
      
      it "should show name, cas_number, vendor, amount and unit colums for create" do
@@ -20,14 +20,14 @@ describe ChemicalsController do
    end
    
    describe "creating a chemical" do
-     xit "should display a drop down for existing vendors" do
-       config.columns[:vendor].form_ui.should == "select"
+     it "should display a drop down for existing vendors" do
+       config.columns[:vendor].form_ui.should == :select
      end
    end
    
    describe "updating a chemical" do
      xit "should display a drop down of existing vendors" do
-       config.columns[:vendor].form_ui.should == "select"
+       config.columns[:vendor].form_ui.should == :select
      end
    end
 

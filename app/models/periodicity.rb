@@ -1,48 +1,108 @@
 class Periodicity
   require 'date'
-  WEEKLY = :weekly
-  MONTHLY = :monthly
-  DAILY = :business_day
-  TYPES = ['Weekly', 'Monthly', 'Business Day']
+  WEEKLY = 'Weekly'
+  MONTHLY = 'Monthly'
+  BUSINESS_DAILY = 'Business Day'
   
-  def initialize(start_date, type, interval=1)
-    @start_date = start_date
+  TYPES = [WEEKLY, MONTHLY, BUSINESS_DAILY]
+  
+  def initialize(type, start_date, end_date=nil, interval=1)
+    raise "Unknown type: #{type}" unless TYPES.include?(type)
+    
     @type = type
+    @start_date = start_date
+    @end_date = end_date || Date.today
     @interval = interval
+
   end
   
   def elapsed_periods
     case @type
-      when 'Business Day' : elapsed_days
-      when 'Weekly' : elapsed_weeks
-      when 'Monthly' : elapsed_months
+      when BUSINESS_DAILY : elapsed_days
+      when WEEKLY       : elapsed_weeks
+      when MONTHLY      : elapsed_months
       else raise "Unknown type: #{@type}"
-    end 
+    end
+  end
+  
+  def date_after_n_periods(n)
+    case @type
+      when BUSINESS_DAILY : date_after_n_days(n)
+      when WEEKLY         : date_after_n_weeks(n)
+      when MONTHLY        : date_after_n_months(n)
+      else raise "Unknown type: #{@type}"
+    end
+  end
+
+  private
+  
+  def date_after_n_days(n)
+    return nil if @end_date < Date.today
+    i = 0
+    date = Date.today
+    while i < n
+      date += 1
+      i += date.cwday < 6 ? 1 : 0
+    end
+    date
+  end
+  
+  def date_after_n_weeks(n)
+    return nil if @end_date < Date.today
+    today = Date.today
+    return nil if n == 0 and @start_date < today
+    return today if n == 0
+    
+    today_cwday = today.cwday
+    start_cwday = @start_date.cwday
+    
+    correction  = if start_cwday <= today_cwday
+        today_cwday - start_cwday
+      else 
+        today_cwday + 7 - start_cwday
+      end 
+    working_day = today - correction
+    total_days = n * 7
+    working_day + total_days 
+  end
+  
+  def date_after_n_months(n)
+    return nil if @end_date < Date.today
+    today = Date.today
+    return nil if n == 0 and @start_date < today
+    return today if n == 0
+    
+    today_mday = today.mday
+    mday = @start_date.mday
+    
+    n -= 1 if today_mday < mday and @start_date.month < today.month
+          
+    time = Date.new(today.year,today.month,mday).plus_with_duration(n.months)
+    Date.new(time.year,time.month,time.day)
   end
   
   def elapsed_days
     sum = 0
     counter = 0
-    Date.today.downto(@start_date)  do |d| 
+    @end_date.downto(@start_date)  do |d| 
       if d.cwday < 6
         sum += counter.modulo(@interval) == 0 ? 1 : 0
         counter += 1
       end
     end
-    sum
+    sum    
   end
-
+  
   def elapsed_weeks
-    today = Date.today
-    return 0 if @start_date > today
-    ((today-@start_date)/7).to_i + 1
+    return 0 if @start_date > @end_date
+    ((@end_date-@start_date)/7).to_i + 1
   end
   
   def elapsed_months
     sum = 0
-    today = Date.today
-    date = Date.new(today.year,today.month,today.day)
-    original_day = today.mday
+    original_day = @end_date.mday
+
+    date = Date.new(@end_date.year,@end_date.month,@end_date.day)
     
     while(date >= @start_date)
       sum += 1
@@ -67,5 +127,40 @@ class Periodicity
     end
     sum
   end
-    
+   
+end
+
+class BusinessDay < Periodicity
+  
+  def initialize(start_date,end_date=Date.today,interval=1)
+    super(BUSINESS_DAILY,start_date,end_date,interval)
+  end
+  
+  def elapsed_periods
+    elapsed_days
+  end
+end
+
+class Weekly < Periodicity
+  
+  def initialize(start_date,end_date=Date.today,interval=1)
+    super(WEEKLY,start_date,end_date,interval)
+  end
+  
+  def elapsed_periods
+    elapsed_weeks
+  end
+  
+end
+
+class Monthly < Periodicity
+  
+  def initialize(start_date,end_date=Date.today,interval=1)
+    super(MONTHLY,start_date,end_date,interval)
+  end
+  
+  def elapsed_periods
+    elapsed_months
+  end
+
 end

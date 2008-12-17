@@ -59,7 +59,7 @@ describe ScheduledUse do
      end
     
      it "should require a periodicity_value if it has a daily repeat" do
-       use = ScheduledUse.new(valid_attributes.except(:periodicity_value).merge(:periodicity_type=>Periodicity::DAILY))
+       use = ScheduledUse.new(valid_attributes.except(:periodicity_value).merge(:periodicity_type=>Periodicity::BUSINESS_DAILY))
        use.should_not be_valid
      end
 

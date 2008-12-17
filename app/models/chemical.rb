@@ -10,8 +10,14 @@ class Chemical < ActiveRecord::Base
 
   belongs_to  :vendor
   has_many :one_time_uses
-  has_many :scheduled_uses
+  has_many :scheduled_uses # TODO - Multiple scheduled uses are not fully supported
 
+  def last_usable_date
+    return nil unless use_per_scheduled_use and use_per_scheduled_use > 0
+    remaining_full_uses = current_amount / use_per_scheduled_use
+    scheduled_use_periodicity.date_after_n_periods(remaining_full_uses)
+  end
+  
   def current_amount
     original_amount - one_time_amount_total - past_scheduled_uses_total
   end
@@ -19,19 +25,24 @@ class Chemical < ActiveRecord::Base
   def one_time_amount_total
     one_time_uses.inject(0) { |sum, u| sum + u.amount }
   end
-    # 
-    # def initialize(start_date, type, interval=1)
-    #    @start_date = start_date
-    #    @type = type
-    #    @interval = interval
-    #  end
-    # 
-    #  def elapsed_periods
-    #    
+  
+  def use_per_scheduled_use
+    return nil unless scheduled_uses and scheduled_uses.first
+    scheduled_uses.first.amount
+  end
+
+  def scheduled_use
+    @scheduled_use ||= scheduled_uses.first
+  end
+  
+  def scheduled_use_periodicity
+    Periodicity.new(scheduled_use.periodicity_type,scheduled_use.start_date,scheduled_use.end_date,scheduled_use.periodicity_value)
+  end
+  
   def past_scheduled_uses_total
     total = 0
     scheduled_uses.each do |u|
-      total += u.amount * Periodicity.new(u.start_date,u.periodicity_type,u.periodicity_value).elapsed_periods
+      total += u.amount * Periodicity.new(u.periodicity_type,u.start_date,nil,u.periodicity_value).elapsed_periods
     end
     total
   end

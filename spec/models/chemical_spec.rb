@@ -21,8 +21,8 @@ describe Chemical do
        :chemical_id => @chemical.id,
        :use_date => Date.today,
        :start_date => Date.today,
-       :end_date => Date.today,
-       :periodicity_type => "Weekly",
+       :end_date => Date.today+10,
+       :periodicity_type => Periodicity::WEEKLY,
        :periodicity_value => "1"
      }.extend(HashExtension)
   end
@@ -156,12 +156,30 @@ describe Chemical do
   end
   
   describe "#last_usable_date" do
-    # * Forecast when chemical will run out: Display a warning on the list of chemicals, with the date the chemical will run out
-    #   - If the last use brings the amount to zero, then display the date of the last use
-    #   - If the last use makes the amount negative, display the date of the use previous to the last use
+    # Forecast when chemical will run out:
       
-    it "should description" do
-      pending("figure me out")
+    before(:each) do
+      Date.stub!(:today).and_return(Date.new(2008,12,17))       
+      @chemical = Chemical.create!(valid_chemical_attributes.merge(:original_amount => 100))
     end
+    
+    it "should return nil if chemical is not scheduled to run out" do
+      OneTimeUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 100))
+      @chemical.last_usable_date.should be_nil
+    end
+    
+    #   - If the last use brings the amount to zero, then display the date of the last use
+    it "should should return tomorrow if all chemical will be gone tomorrow" do
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 50, :periodicity_type => Periodicity::BUSINESS_DAILY))
+      @chemical.last_usable_date.should == Date.today + 1
+    end
+
+    #   - If the last use makes the amount negative, display the date of the use previous to the last use
+    it "should should return tomorrow if some chemical will remain tomorrow, but not a scheduled amount" do
+      ScheduledUse.create!(use_attributes.merge(:chemical => @chemical, :amount => 40, :periodicity_type => Periodicity::BUSINESS_DAILY))
+      @chemical.last_usable_date.should == Date.today + 1
+    end
+    
+    
   end
 end
