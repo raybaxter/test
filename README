@@ -2,7 +2,9 @@ Problem Description Below
 
 Requirements 
 
-This code was developed on Mac OS X using, Ruby 1.8.6, Rails 2.2.2, and Sqlite 3.4.0. I have not knowingly used any other gem dependencies for the required portions of this problem, although there is ActiveSupport used for the Vendor controllers and view. 
+The "Part II" release moves entirely to ActiveScaffold layouts. 
+
+This code was developed on Mac OS X using, Ruby 1.8.6, Rails 2.2.2, and Sqlite 3.4.0. I have not knowingly used any other gem dependencies for the required portions of this problem, although there is ActiveScaffold used for the Vendor controllers and view. 
 
 In addition, the code uses the dig command to determine whether a url belongs to a valid domain. This command is assume to be in the path. DiG version 9.4.2-P2 was used in testing, but any version that accepts the '+short' option ought to work.
 
@@ -12,7 +14,11 @@ Open Issues
 
 Code does not validate that a CAS # corresponds to an existing compound.
 
-Code does not validate amounts or units. The amounts are assumed to be Integers. 
+Code does not validate units. All uses or any chemical are assumed to be using the same units. The amounts are Integers. 
+
+It is possible to create multiple scheduled uses for a single chemical. Current amounts will be correct, but forecasts of future consumption are incorrect.
+
+
 
 Problem Description
 
