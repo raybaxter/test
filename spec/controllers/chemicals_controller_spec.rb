@@ -10,6 +10,11 @@ describe ChemicalsController do
        config.list.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit, :current_amount, :last_full_use_date]
      end
      
+     it "should label the last_full_use_date as Last Use Date" do
+       config.columns[:last_full_use_date].label.should == "Last Use Date"
+     end
+     
+     
      it "should show name, cas_number, vendor, amount and unit colums for create" do
        config.create.columns.map(&:name).should == [:name, :cas_number, :vendor, :original_amount, :unit]
      end

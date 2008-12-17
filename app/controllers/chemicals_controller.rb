@@ -7,6 +7,8 @@ class ChemicalsController < ApplicationController
     config.update.columns = [:name, :cas_number, :vendor, :original_amount, :unit]
     
     config.columns[:vendor].form_ui = :select
+    config.columns[:last_full_use_date].label = "Last Use Date"
+    
     list.sorting = {:name => 'ASC'}
   end
 end
